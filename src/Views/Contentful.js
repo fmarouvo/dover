@@ -3,7 +3,7 @@ import { createClient } from 'contentful';
 
 const client = createClient({
   space: 'dover',
-  accessToken: 'CFPAT-6yXzEr42SxJ2jULTIQgzqfIgph6UKA0gorgdbI7wARQ'
+  accessToken: ''
 });
 
 const fetchContent = async () => {
@@ -26,25 +26,30 @@ function ContentfulContent() {
     };
 
     getContent();
-	console.log("CONTENT");
   }, []);
 
+  const handleButtonClick = async () => {
+    const data = await fetchContent();
+    setContent(data);
+  };
+
   return (
-	<div>
-		<div className="patient-container">
-			<button onClick={ContentfulContent}>Buscar Dados</button>
-		</div>
-	  
-		<div>
-		  {content.map(item => (
-			<div key={item.sys.id}>
-			  <h2>{item.fields.id}</h2>
-			  <p>{item.fields.name}</p>
-			  {/* Renderizar outros campos conforme necessário */}
-			</div>
-		  ))}
-		</div>
-	</div>
+    <div>
+      <div className="patient-container">
+        <button onClick={handleButtonClick}>Buscar Dados</button>
+      </div>
+
+      <div>
+        {content.map(item => (
+          <div key={item.sys.id}>
+            <h2>{item.fields.id}</h2>
+            {/* Verifica se 'name' existe antes de renderizar */}
+            <p>{item.fields.name ? item.fields.name : "Nome não disponível"}</p>
+            {/* Renderizar outros campos conforme necessário */}
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
