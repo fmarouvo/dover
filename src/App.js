@@ -1,24 +1,23 @@
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import React, {Fragment} from 'react';
+import Navbar from './Core/Navbar';
 import logo from './logo.svg';
 import './App.css';
+import Home from './Views/Home';
+import Contentful from './Views/Contentful';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Fragment>
+        <Navbar/>
+        <Routes>
+          {/* Corrigindo os caminhos das rotas */}
+          <Route exact path='/' element={<Home/>}/>
+          <Route exact path='/contentful' element={<Contentful/>}/>
+        </Routes>
+      </Fragment>
+    </Router>
   );
 }
 
